@@ -72,10 +72,8 @@ def linear_search(input_list, number):
 def test_function(test_case):
     input_list = test_case[0]
     number = test_case[1]
-    if linear_search(input_list, number) == rotated_array_search(input_list, number):
-        print("Pass")
-    else:
-        print("Fail")
+    assert(linear_search(input_list, number) == rotated_array_search(input_list, number))
+    
 
 def test_edge_cases():
     # Empty list
@@ -109,7 +107,7 @@ if __name__ == "__main__":
     test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 2])
     test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 3])
     test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 4])
-    
+
     test_function([[6, 7, 8, 1, 2, 3, 4], 6])
     test_function([[6, 7, 8, 1, 2, 3, 4], 7])
     test_function([[6, 7, 8, 1, 2, 3, 4], 8])
