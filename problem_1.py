@@ -2,23 +2,35 @@ def sqrt(number : int) -> int:
     """
     Calculate the floored square root of a number
 
+    Time complexity: O(log(n)), where n is half of the input number.
+                                The highest possible value of sqrt(number) 
+                                is number/2 if number > 1. 
+                                Bisection method is being used - O(log(n)).
+
+    Space complexity: O(1), space used is independent of the input value
+
     Args:
        number(int): Number to find the floored squared root
     Returns:
        int: Floored Square Root
     """
     if  type(number) is not int:
+        # number must be an int
         raise TypeError('Input provided is not an integer')
     elif number < 0:
+        # number must be positive
         raise ValueError('Square root function cannot handle negative inputs')
     elif number < 2:
+        # Square root of 0 and 1 are itself
         return number
     
+
     upper_lim = number//2
     lower_lim = 2
 
     diff = upper_lim - lower_lim
 
+    # Iterates until it reaches the convergence criteria. 
     while diff > 1:
 
         mid_val = (lower_lim + upper_lim) // 2
