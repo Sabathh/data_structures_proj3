@@ -7,7 +7,7 @@ def sqrt(number : int) -> int:
                                 is number/2 if number > 1. 
                                 Bisection method is being used - O(log(n)).
 
-    Space complexity: O(1), space used is independent of the input value
+    Space complexity: O(1): Space used is independent of the input value
 
     Args:
        number(int): Number to find the floored squared root
