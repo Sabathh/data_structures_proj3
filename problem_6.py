@@ -25,7 +25,7 @@ def get_min_max(ints):
     for item in ints:
        if item < min:
           min = item
-       if item > max:
+       elif item > max:
           max = item
 
     return (min, max)
@@ -49,7 +49,7 @@ def test_randomized_cases():
       assert(get_min_max(l) == (0, 9))
 
 if __name__ == "__main__":
-   
+
     test_edge_cases()
 
     test_randomized_cases()
