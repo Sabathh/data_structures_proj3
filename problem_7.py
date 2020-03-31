@@ -1,19 +1,34 @@
 from typing import List
-# A RouteTrie will store our routes and their associated handlers
+
 class RouteTrie:
     def __init__(self, root_handler: str):
-        # Initialize the trie with an root node and a handler, this is the root path or home page node
+        """ Initializes the trie with a root node and a handler, this is the root path 
+        
+        Arguments:
+            root_handler {str} -- Handler to be stored at the root level
+        """
         self.root = RouteTrieNode()
         self.root_handler = root_handler
 
     def insert(self, path_list: List[str], handler: str):
-        # Similar to our previous example you will want to recursively add nodes
-        # Make sure you assign the handler to only the leaf (deepest) node of this path
+        """ Traverses the Trie and adds inserts the handler at the end of the specified path
+
+            Time complexity: O(n), where n is the number of items in path_list
+
+            Space complexity: O(n). Number of nodes created scales linearly with the size of path_list
+        
+        Arguments:
+            path_list {List[str]} -- Path broken down into a list
+            handler {str} -- Handler to be stored at the specified path
+        """
+    
         current_node = self.root
 
         if len(path_list) == 0:
             return
 
+        # Navigate the Trie using the path provided. 
+        # If part of the path does not exist in the Trie a node will be created
         for path in path_list:
             if path not in current_node.children:
                 current_node.insert(path)
@@ -22,14 +37,27 @@ class RouteTrie:
         current_node.handler = handler
 
     def find(self, path_list: List[str]) -> str:
-        # Starting at the root, navigate the Trie to find a match for this path
-        # Return the handler for a match, or None for no match
+        """ Starting at the root, navigate the Trie to find a match for this path
+
+            Time complexity: O(n), where n is the number of items in path_list
+
+            Space complexity: O(1). Space used is independent of the inputs.
+        
+        Arguments:
+            path_list {List[str]} -- Path broken down into a list
+        
+        Returns:
+            str -- If a match is found returns the equivalent RouteTrieNode.handler.
+                   Otherwise, returns None.
+        """
         
         if len(path_list) == 0:
             return self.root_handler
 
         current_node = self.root
 
+        # Navigate the Trie using the path provided. 
+        # If part of the path does not exist, stop the search.
         for path in path_list:
             if path in current_node.children:
                 current_node =  current_node.children[path]
@@ -38,36 +66,51 @@ class RouteTrie:
 
         return current_node.handler
 
-# A RouteTrieNode will be similar to our autocomplete TrieNode... with one additional element, a handler.
+
 class RouteTrieNode:
     def __init__(self):
         # Initialize the node with children as before, plus a handler
         self.handler = None
         self.children = {}
 
-    def insert(self, handler : str):
-        # Insert the node as before
-        if handler not in self.children:
-            self.children[handler] = RouteTrieNode()
+    def insert(self, path : str):
+        """ Insert node for the provided path
+        
+        Arguments:
+            path {str} -- Path for the node
+        """
+        if path not in self.children:
+            self.children[path] = RouteTrieNode()
 
-# The Router class will wrap the Trie and handle 
+
 class Router:
     def __init__(self, root_handler: str, not_found_handler: str):
-        # Create a new RouteTrie for holding our routes
-        # You could also add a handler for 404 page not found responses as well!
         self.route_trie = RouteTrie(root_handler)
         self.not_found_handler = not_found_handler
 
 
     def add_handler(self, path_str: str, handler: str):
-        # Add a handler for a path
-        # You will need to split the path and pass the pass parts
-        # as a list to the RouteTrie
+        """ Adds a handler for the specified path
+        
+        Arguments:
+            path_str {str} -- Full path
+            handler {str} -- Handler to be added to the path
+        """
+        
         path_list = self.split_path(path_str)
         self.route_trie.insert(path_list, handler)
 
 
     def lookup(self, path_str: str) -> str:
+        """ Attempts to retrieve a handler from the specified path
+        
+        Arguments:
+            path_str {str} -- Full path
+        
+        Returns:
+            str -- If a match is found returns the equivalent RouteTrieNode.handler.
+                   Otherwise, returns self.not_found_handler.
+        """
         # lookup path (by parts) and return the associated handler
         # you can return None if it's not found or
         # return the "not found" handler if you added one
@@ -84,9 +127,14 @@ class Router:
 
 
     def split_path(self, path_str: str) -> List[str]:
-        # you need to split the path into parts for 
-        # both the add_handler and loopup functions,
-        # so it should be placed in a function here
+        """ Splits the path into a list so it can be iterated onto.
+        
+        Arguments:
+            path_str {str} -- Full path
+        
+        Returns:
+            List[str] -- List containing the individual paths in the order they were specified
+        """
 
         path_list = [path for path in path_str.split("/") if path != ""]
 
