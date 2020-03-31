@@ -4,8 +4,8 @@ class Heap:
         if initial_size < 3:
             # Makes sure the root will always have left and right nodes
             initial_size = 3
-        self.cbt = [None for _ in range(initial_size)]        # initialize arrays
-        self.next_index = 0                                   # denotes next index where new element should go
+        self.cbt = [None for _ in range(initial_size)]  # initialize arrays
+        self.next_index = 0                             # denotes next index where new element should go
 
     def size(self):
         return self.next_index 
@@ -88,6 +88,9 @@ class Heap:
     def insert(self, data):
         """
         Insert `data` into the heap
+
+        Time complexity: O(log(n))
+        Space complexity: O(1)
         """
         # Insert data at next index
         self.cbt[self.next_index] = data
@@ -111,6 +114,9 @@ class Heap:
     def remove(self):
         """
         Remove and return the element at the top of the heap
+
+        Time complexity: O(log(n))
+        Space complexity: O(1)
         """
         root = self.cbt[0]
         if root is None:
@@ -173,10 +179,9 @@ def rearrange_digits(input_list):
 def test_function(test_case):
     output = rearrange_digits(test_case[0])
     solution = test_case[1]
-    if sum(output) == sum(solution):
-        print("Pass")
-    else:
-        print("Fail")
+    # The main requirement is to return two numbers whose sum is the highest possible
+    # The order of the digits does not matter or numbers.
+    assert(sum(output) == sum(solution))
 
 def test_edge_cases():
     # Empty list
@@ -184,10 +189,13 @@ def test_edge_cases():
     # List with single number
     test_function([[1], [1, 0]])
 
+def test_regular_cases():
+    test_function([[1, 2, 3, 4, 5], [542, 31]])
+    test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+
 if __name__ == "__main__":
 
     test_edge_cases()
 
-    test_function([[1, 2, 3, 4, 5], [542, 31]])
-    test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+    test_regular_cases()
 
