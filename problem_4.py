@@ -40,10 +40,7 @@ def sort_012(input_list):
 def test_function(test_case):
     sorted_array = sort_012(test_case)
     print(sorted_array)
-    if sorted_array == sorted(test_case):
-        print("Pass")
-    else:
-        print("Fail")
+    assert(sorted_array == sorted(test_case))
 
 def test_edge_cases():
     # One of each, unsorted
