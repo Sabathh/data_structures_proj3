@@ -1,4 +1,3 @@
-# TODO: Organize Heap class
 class Heap:
     def __init__(self, initial_size):
         if initial_size < 3:
