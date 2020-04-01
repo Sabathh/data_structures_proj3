@@ -13,8 +13,9 @@ Initialized 2 paramenters with the first element of the input list:
 - $min$ - Shall store the lowest value in the list so far
 - $max$ - Shall store the highest value in the list so far
 
-Traverse the entire list. 
-- If the current value is lower than $min$: update $min$
+Traverse the entire list.
+
+- If the current value is lower than $min$: update $min$.
 - If the current value is higher than $max$: update $max$
 
 ## Time complexity
